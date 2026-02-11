@@ -13,18 +13,18 @@ class CallObserver
     {
         $lead = $call->lead()->first();
 
-        if ($lead->calls()->count() == 1 && $lead->status == LeadStatus::NEW) {
-            $lead->status = LeadStatus::IN_PROGRESS;
+        if ($lead->calls()->count() == 1 && $lead->status == LeadStatus::NEW->value) {
+            $lead->status = LeadStatus::IN_PROGRESS->value;
         }
 
-        if ($call->result == CallResult::SUCCESS) {
-            $lead->status = LeadStatus::WON;
+        if ($call->result == CallResult::SUCCESS->value) {
+            $lead->status = LeadStatus::WON->value;
         }
 
         $lastThree = $lead->calls()->latest()->take(3)->pluck('result');
 
-        if ($lastThree->count() == 3 && $lastThree->every(fn ($result) => $result == CallResult::NO_ANSWER) && $lead->status != LeadStatus::WON) {
-            $lead->status = LeadStatus::LOST;
+        if ($lastThree->count() == 3 && $lastThree->every(fn ($result) => $result == CallResult::NO_ANSWER->value) && $lead->status != LeadStatus::WON->value) {
+            $lead->status = LeadStatus::LOST->value;
         }
 
         $lead->save();
