@@ -8,6 +8,6 @@ use CrmPackage\Http\Controllers\ManagerController;
 Route::prefix('api')->group(function () {
     Route::post('/leads', [LeadController::class, 'store']);
     Route::post('/leads/{lead}/calls', [CallController::class, 'store']);
-    Route::get('/managers/{manager}/leads', [ManagerController::class, 'leads']);
+    Route::get('/managers/{manager}/leads', [ManagerController::class, 'index']);
 
 });
