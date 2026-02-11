@@ -16,11 +16,7 @@ return new class extends Migration {
 
             $table->unsignedInteger('duration'); // секунди
 
-            $table->enum('result', [
-                'no_answer',
-                'callback_later',
-                'success'
-            ]);
+            $table->string('result');
 
             $table->timestamp('created_at')
                 ->useCurrent();

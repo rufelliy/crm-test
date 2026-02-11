@@ -2,9 +2,11 @@
 
 namespace CrmPackage\Http\Controllers;
 
+use CrmPackage\Enums\CallResult;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use CrmPackage\Models\Lead;
+use Illuminate\Validation\Rule;
 
 class CallController extends Controller
 {
@@ -13,7 +15,7 @@ class CallController extends Controller
         $lead = Lead::findOrFail($leadId);
         $validated  = $request->validate([
             'duration' => 'required|integer|min:1',
-            'result' => 'required|in:no_answer,callback_later,success',
+            'result' => ['required', Rule::enum(CallResult::class)],
             'manager_id' => 'required|exists:managers,id',
         ]);
 

@@ -11,7 +11,7 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->string('phone', 20);
-            $table->enum('status', ['new', 'in_progress', 'won', 'lost'])
+            $table->string('status')
                 ->default('new');
 
             $table->foreignId('manager_id')

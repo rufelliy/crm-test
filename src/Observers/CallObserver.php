@@ -4,6 +4,8 @@ namespace CrmPackage\Observers;
 
 use CrmPackage\Models\Call;
 use Illuminate\Support\Facades\DB;
+use CrmPackage\Enums\LeadStatus;
+use CrmPackage\Enums\CallResult;
 
 class CallObserver
 {
@@ -11,19 +13,18 @@ class CallObserver
     {
         $lead = $call->lead()->first();
 
-        if ($lead->calls()->count() === 1 && $lead->status === 'new') {
-            $lead->status = 'in_progress';
+        if ($lead->calls()->count() == 1 && $lead->status == LeadStatus::NEW) {
+            $lead->status = LeadStatus::IN_PROGRESS;
         }
 
-        if ($call->result === 'success') {
-            $lead->status = 'won';
+        if ($call->result == CallResult::SUCCESS) {
+            $lead->status = LeadStatus::WON;
         }
 
         $lastThree = $lead->calls()->latest()->take(3)->pluck('result');
 
-        if ($lastThree->count() === 3 &&
-            $lastThree->every(fn ($result) => $result === 'no_answer')) {
-            $lead->status = 'lost';
+        if ($lastThree->count() == 3 && $lastThree->every(fn ($result) => $result == CallResult::NO_ANSWER) && $lead->status != LeadStatus::WON) {
+            $lead->status = LeadStatus::LOST;
         }
 
         $lead->save();
