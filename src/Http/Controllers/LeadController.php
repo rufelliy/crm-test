@@ -15,14 +15,14 @@ class LeadController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'string', 'max:20'],
-            'status' => ['nullable', Rule::enum(LeadStatus::class)],
+//            'status' => ['nullable', Rule::enum(LeadStatus::class)],
             'manager_id' => ['nullable', 'exists:managers,id'],
         ]);
 
         $lead = Lead::create([
             'name' => $validated['name'],
             'phone' => $validated['phone'],
-            'status' => $validated['status'] ?? 'new',
+//            'status' => $validated['status'] ?? 'new',
             'manager_id' => $validated['manager_id'] ?? null,
         ]);
 
