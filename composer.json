@@ -1,0 +1,22 @@
+{
+  "name": "rufelliy/crm-package",
+  "description": "Test task (Managers, Leads, Calls)",
+  "type": "library",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "CrmPackage\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "CrmPackage\\CrmSystemServiceProvider"
+      ]
+    }
+  },
+  "require": {
+    "php": "^8.1",
+    "illuminate/support": "^10|^11|^12"
+  }
+}
